@@ -24,8 +24,6 @@ volatile unsigned char *allof7e;
 #define GPIO_BASE (0x7E200000)
 
 #define ACCESS(offset, type) (*(volatile type*)(offset+(int)allof7e-0x7e000000))
-#define SETBIT(base, bit) ACCESS(base, int) |= 1<<bit
-#define CLRBIT(base, bit) ACCESS(base, int) &= ~(1<<bit)
 
 void setup_fm(int state) {
     int mem_fd = open("/dev/mem", O_RDWR|O_SYNC);
@@ -64,10 +62,12 @@ void setup_fm(int state) {
     };
     // Note sure why I can't use next line in place of following
     // three.
+    // This is a pure C issue, not a hardware issue.
+    //
     //ACCESS(GPFSEL0, struct GPFSEL0_T).FSEL4 = 4; // Alternative function 0 (see p.92)
-    SETBIT(GPFSEL0, 14);
-    CLRBIT(GPFSEL0, 13);
-    CLRBIT(GPFSEL0, 12);
+    int tmp = ACCESS(GPFSEL0, int);
+    tmp = (tmp | (1<<14)) & ~ ((1<<12) | (1<<13));
+    ACCESS(GPFSEL0, int) = tmp;
 
     //
     // The 6 means select PLLD

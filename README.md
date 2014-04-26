@@ -9,6 +9,7 @@ I deleted that. It sacrifices some quality but the code is easier to read.
 
 Update:
 Fixed problem mentioned below though I don't understand how.
+Maybe someone could look at the code where I set GPFSEL0.
 
 Update:
 Looks like it exploits some persistent state left over form the original code so
