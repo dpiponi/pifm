@@ -18,11 +18,14 @@
 
 volatile unsigned char *allof7e;
 
-#define ACCESS(offset, type) (*(volatile type*)(offset+(int)allof7e-0x7e000000))
-
 #define CM_GP0CTL (0x7e101070) // p.107
 #define GPFSEL0 (0x7E200000)   // p.90
 #define CM_GP0DIV (0x7e101074) // p.108
+#define GPIO_BASE (0x7E200000)
+
+#define ACCESS(offset, type) (*(volatile type*)(offset+(int)allof7e-0x7e000000))
+#define SETBIT(base, bit) ACCESS(base, int) |= 1<<bit
+#define CLRBIT(base, bit) ACCESS(base, int) &= ~(1<<bit)
 
 void setup_fm(int state) {
     int mem_fd = open("/dev/mem", O_RDWR|O_SYNC);
@@ -59,7 +62,12 @@ void setup_fm(int state) {
         char FSEL9 : 3;
         char RESERVED : 2;
     };
-    ACCESS(GPFSEL0, struct GPFSEL0_T).FSEL4 = 4; // Alternative function 0 (see p.92)
+    // Note sure why I can't use next line in place of following
+    // three.
+    //ACCESS(GPFSEL0, struct GPFSEL0_T).FSEL4 = 4; // Alternative function 0 (see p.92)
+    SETBIT(GPFSEL0, 14);
+    CLRBIT(GPFSEL0, 13);
+    CLRBIT(GPFSEL0, 12);
 
     //
     // The 6 means select PLLD
