@@ -16,9 +16,6 @@
 
 #include <unistd.h>
 
-#define PAGE_SIZE (4*1024)
-#define BLOCK_SIZE (4*1024)
-
 volatile unsigned char *allof7e;
 
 #define ACCESS(offset, type) (*(volatile type*)(offset+(int)allof7e-0x7e000000))
