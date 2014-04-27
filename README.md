@@ -8,6 +8,11 @@ pseudo-random number generator to dither the timing of the clock.
 I deleted that. It sacrifices some quality but the code is easier to read.
 
 Update:
+Access to register via bitfields was generating byte loads and stores.
+Fixed by using temporary 32-bit intermediate.
+Reading assembly language it looks suspicious still but code seems to work.
+
+Update:
 Fixed problem mentioned below though I don't understand how.
 Maybe someone could look at the code where I set GPFSEL0.
 
