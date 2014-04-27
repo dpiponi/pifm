@@ -60,14 +60,9 @@ void setup_fm(int state) {
         char FSEL9 : 3;
         char RESERVED : 2;
     };
-    // Note sure why I can't use next line in place of following
-    // three.
-    // This is a pure C issue, not a hardware issue.
-    //
-    //ACCESS(GPFSEL0, struct GPFSEL0_T).FSEL4 = 4; // Alternative function 0 (see p.92)
-    int tmp = ACCESS(GPFSEL0, int);
-    tmp = (tmp | (1<<14)) & ~ ((1<<12) | (1<<13));
-    ACCESS(GPFSEL0, int) = tmp;
+    struct GPFSEL0_T tmp = ACCESS(GPFSEL0, struct GPFSEL0_T);
+    tmp.FSEL4 = 4; // Alternative function 0 (see p.92)
+    ACCESS(GPFSEL0, struct GPFSEL0_T) = tmp;
 
     //
     // The 6 means select PLLD
