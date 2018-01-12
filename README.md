@@ -7,6 +7,9 @@ The original code improved the accuracy of the modulation by using a
 pseudo-random number generator to dither the timing of the clock.
 I deleted that. It sacrifices some quality but the code is easier to read.
 
+
+Status
+------
 Update:
 Access to register via bitfields was generating byte loads and stores.
 Fixed by using temporary 32-bit intermediate.
