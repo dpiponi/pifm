@@ -22,4 +22,4 @@ Maybe someone could look at the code where I set GPFSEL0.
 Update:
 Looks like it exploits some persistent state left over form the original code so
 this code won't work unless you run the original once first.
-Working on it...
+I don't kniw when I'll return to this.
